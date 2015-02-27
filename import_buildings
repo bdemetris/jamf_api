@@ -1,0 +1,23 @@
+import csv
+import subprocess
+
+csvFile = 'PATH TO FILE.csv'
+xmlFile = 'PATH TO FILE.xml'
+
+csvData = csv.reader(open(csvFile, "rU"))
+
+JSSURL='https://jss.company.com:8443/JSSResource/buildings/name/XXX'
+Authentication='user:password'
+
+i = 0
+for row in (csvData):
+	xmlData = open(xmlFile, 'w')
+	xmlData.write('<?xml version="1.0" encoding="UTF-8"?>')
+	xmlData.write('<building>')
+	xmlData.write('<name>')
+	xmlData.write(row[i])
+	xmlData.write('</name>')
+	xmlData.write('</building>')
+	xmlData.close()
+	subprocess.call(['curl', '-k', '-u', Authentication, JSSURL, '-T', xmlFile, '-X', 'POST'])	
+i += 1
