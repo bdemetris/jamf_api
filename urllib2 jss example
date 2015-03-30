@@ -1,0 +1,10 @@
+import urllib2
+import base64
+
+xml = "<mobile_device><location><username>new.user</username></location></mobile_device>"
+
+request = urllib2.Request('https://myjss.com/JSSResource/..')
+request.add_header('Authorization', 'Basic ' + base64.b64encode('jssusername:jsspassword'))
+request.add_header('Content-Type', 'text/xml')
+request.get_method = lambda: 'PUT'
+response = urllib2.urlopen(request, xml)
